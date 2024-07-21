@@ -20,6 +20,10 @@ import { ProductFindUniqueArgs } from "./ProductFindUniqueArgs";
 import { CreateProductArgs } from "./CreateProductArgs";
 import { UpdateProductArgs } from "./UpdateProductArgs";
 import { DeleteProductArgs } from "./DeleteProductArgs";
+import { ReviewFindManyArgs } from "../../review/base/ReviewFindManyArgs";
+import { Review } from "../../review/base/Review";
+import { InventoryFindManyArgs } from "../../inventory/base/InventoryFindManyArgs";
+import { Inventory } from "../../inventory/base/Inventory";
 import { Category } from "../../category/base/Category";
 import { ProductService } from "../product.service";
 @graphql.Resolver(() => Product)
@@ -112,6 +116,34 @@ export class ProductResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Review], { name: "reviews" })
+  async findReviews(
+    @graphql.Parent() parent: Product,
+    @graphql.Args() args: ReviewFindManyArgs
+  ): Promise<Review[]> {
+    const results = await this.service.findReviews(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @graphql.ResolveField(() => [Inventory], { name: "inventories" })
+  async findInventories(
+    @graphql.Parent() parent: Product,
+    @graphql.Args() args: InventoryFindManyArgs
+  ): Promise<Inventory[]> {
+    const results = await this.service.findInventories(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 
   @graphql.ResolveField(() => Category, {

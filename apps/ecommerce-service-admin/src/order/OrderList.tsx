@@ -28,6 +28,8 @@ export const OrderList = (props: ListProps): React.ReactElement => {
         </ReferenceField>
         <TextField label="totalAmount" source="totalAmount" />
         <TextField label="status" source="status" />
+        <TextField label="trackingNumber" source="trackingNumber" />
+        <TextField label="shippingAddress" source="shippingAddress" />
       </Datagrid>
     </List>
   );

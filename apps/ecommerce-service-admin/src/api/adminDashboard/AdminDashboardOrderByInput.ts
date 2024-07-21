@@ -7,4 +7,6 @@ export type AdminDashboardOrderByInput = {
   activity?: SortOrder;
   adminName?: SortOrder;
   email?: SortOrder;
+  salesReports?: SortOrder;
+  productAnalytics?: SortOrder;
 };

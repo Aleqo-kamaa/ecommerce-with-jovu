@@ -22,6 +22,7 @@ import {
   MaxLength,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { PaymentCreateNestedManyWithoutOrdersInput } from "./PaymentCreateNestedManyWithoutOrdersInput";
 
 @InputType()
 class OrderCreateInput {
@@ -61,6 +62,42 @@ class OrderCreateInput {
     nullable: true,
   })
   status?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentCreateNestedManyWithoutOrdersInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentCreateNestedManyWithoutOrdersInput)
+  @IsOptional()
+  @Field(() => PaymentCreateNestedManyWithoutOrdersInput, {
+    nullable: true,
+  })
+  payments?: PaymentCreateNestedManyWithoutOrdersInput;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  trackingNumber?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  shippingAddress?: string | null;
 }
 
 export { OrderCreateInput as OrderCreateInput };

@@ -22,6 +22,12 @@ import { Product } from "./Product";
 import { ProductFindManyArgs } from "./ProductFindManyArgs";
 import { ProductWhereUniqueInput } from "./ProductWhereUniqueInput";
 import { ProductUpdateInput } from "./ProductUpdateInput";
+import { ReviewFindManyArgs } from "../../review/base/ReviewFindManyArgs";
+import { Review } from "../../review/base/Review";
+import { ReviewWhereUniqueInput } from "../../review/base/ReviewWhereUniqueInput";
+import { InventoryFindManyArgs } from "../../inventory/base/InventoryFindManyArgs";
+import { Inventory } from "../../inventory/base/Inventory";
+import { InventoryWhereUniqueInput } from "../../inventory/base/InventoryWhereUniqueInput";
 
 export class ProductControllerBase {
   constructor(protected readonly service: ProductService) {}
@@ -193,5 +199,175 @@ export class ProductControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/:id/reviews")
+  @ApiNestedQuery(ReviewFindManyArgs)
+  async findReviews(
+    @common.Req() request: Request,
+    @common.Param() params: ProductWhereUniqueInput
+  ): Promise<Review[]> {
+    const query = plainToClass(ReviewFindManyArgs, request.query);
+    const results = await this.service.findReviews(params.id, {
+      ...query,
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        rating: true,
+        comment: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/reviews")
+  async connectReviews(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: ReviewWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      reviews: {
+        connect: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/reviews")
+  async updateReviews(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: ReviewWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      reviews: {
+        set: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/reviews")
+  async disconnectReviews(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: ReviewWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      reviews: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Get("/:id/inventories")
+  @ApiNestedQuery(InventoryFindManyArgs)
+  async findInventories(
+    @common.Req() request: Request,
+    @common.Param() params: ProductWhereUniqueInput
+  ): Promise<Inventory[]> {
+    const query = plainToClass(InventoryFindManyArgs, request.query);
+    const results = await this.service.findInventories(params.id, {
+      ...query,
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        quantity: true,
+        warehouseLocation: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/inventories")
+  async connectInventories(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: InventoryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      inventories: {
+        connect: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/inventories")
+  async updateInventories(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: InventoryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      inventories: {
+        set: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/inventories")
+  async disconnectInventories(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: InventoryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      inventories: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

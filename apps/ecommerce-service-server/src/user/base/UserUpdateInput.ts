@@ -22,6 +22,7 @@ import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 import { OrderUpdateManyWithoutUsersInput } from "./OrderUpdateManyWithoutUsersInput";
 import { Type } from "class-transformer";
+import { ReviewUpdateManyWithoutUsersInput } from "./ReviewUpdateManyWithoutUsersInput";
 
 @InputType()
 class UserUpdateInput {
@@ -103,6 +104,42 @@ class UserUpdateInput {
     nullable: true,
   })
   orders?: OrderUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => ReviewUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => ReviewUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => ReviewUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  reviews?: ReviewUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  phoneNumber?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  address?: string | null;
 }
 
 export { UserUpdateInput as UserUpdateInput };

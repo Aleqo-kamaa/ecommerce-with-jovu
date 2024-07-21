@@ -25,6 +25,7 @@ import {
 
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
+import { Payment } from "../../payment/base/Payment";
 
 @ObjectType()
 class Order {
@@ -85,6 +86,39 @@ class Order {
     nullable: true,
   })
   status!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Payment],
+  })
+  @ValidateNested()
+  @Type(() => Payment)
+  @IsOptional()
+  payments?: Array<Payment>;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  trackingNumber!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  shippingAddress!: string | null;
 }
 
 export { Order as Order };

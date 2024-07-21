@@ -8,9 +8,12 @@ import {
   SelectInput,
   NumberInput,
   TextInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
 
 import { UserTitle } from "../user/UserTitle";
+import { PaymentTitle } from "../payment/PaymentTitle";
 
 export const OrderEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -21,6 +24,16 @@ export const OrderEdit = (props: EditProps): React.ReactElement => {
         </ReferenceInput>
         <NumberInput label="totalAmount" source="totalAmount" />
         <TextInput label="status" source="status" />
+        <ReferenceArrayInput
+          source="payments"
+          reference="Payment"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={PaymentTitle} />
+        </ReferenceArrayInput>
+        <TextInput label="trackingNumber" source="trackingNumber" />
+        <TextInput label="shippingAddress" multiline source="shippingAddress" />
       </SimpleForm>
     </Edit>
   );

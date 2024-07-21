@@ -23,6 +23,8 @@ import {
 } from "class-validator";
 import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 import { Type } from "class-transformer";
+import { ReviewCreateNestedManyWithoutProductsInput } from "./ReviewCreateNestedManyWithoutProductsInput";
+import { InventoryCreateNestedManyWithoutProductsInput } from "./InventoryCreateNestedManyWithoutProductsInput";
 
 @InputType()
 class ProductCreateInput {
@@ -87,6 +89,30 @@ class ProductCreateInput {
     nullable: true,
   })
   category?: CategoryWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => ReviewCreateNestedManyWithoutProductsInput,
+  })
+  @ValidateNested()
+  @Type(() => ReviewCreateNestedManyWithoutProductsInput)
+  @IsOptional()
+  @Field(() => ReviewCreateNestedManyWithoutProductsInput, {
+    nullable: true,
+  })
+  reviews?: ReviewCreateNestedManyWithoutProductsInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => InventoryCreateNestedManyWithoutProductsInput,
+  })
+  @ValidateNested()
+  @Type(() => InventoryCreateNestedManyWithoutProductsInput)
+  @IsOptional()
+  @Field(() => InventoryCreateNestedManyWithoutProductsInput, {
+    nullable: true,
+  })
+  inventories?: InventoryCreateNestedManyWithoutProductsInput;
 }
 
 export { ProductCreateInput as ProductCreateInput };

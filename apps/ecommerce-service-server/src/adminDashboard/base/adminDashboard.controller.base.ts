@@ -39,6 +39,8 @@ export class AdminDashboardControllerBase {
         activity: true,
         adminName: true,
         email: true,
+        salesReports: true,
+        productAnalytics: true,
       },
     });
   }
@@ -59,6 +61,8 @@ export class AdminDashboardControllerBase {
         activity: true,
         adminName: true,
         email: true,
+        salesReports: true,
+        productAnalytics: true,
       },
     });
   }
@@ -78,6 +82,8 @@ export class AdminDashboardControllerBase {
         activity: true,
         adminName: true,
         email: true,
+        salesReports: true,
+        productAnalytics: true,
       },
     });
     if (result === null) {
@@ -106,6 +112,8 @@ export class AdminDashboardControllerBase {
           activity: true,
           adminName: true,
           email: true,
+          salesReports: true,
+          productAnalytics: true,
         },
       });
     } catch (error) {
@@ -134,6 +142,8 @@ export class AdminDashboardControllerBase {
           activity: true,
           adminName: true,
           email: true,
+          salesReports: true,
+          productAnalytics: true,
         },
       });
     } catch (error) {

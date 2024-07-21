@@ -20,6 +20,8 @@ export const UserList = (props: ListProps): React.ReactElement => {
         <TextField label="Username" source="username" />
         <TextField label="Email" source="email" />
         <TextField label="Roles" source="roles" />
+        <TextField label="phoneNumber" source="phoneNumber" />
+        <TextField label="address" source="address" />
       </Datagrid>
     </List>
   );

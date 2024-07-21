@@ -18,6 +18,8 @@ import { FloatNullableFilter } from "../../util/FloatNullableFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { IntNullableFilter } from "../../util/IntNullableFilter";
 import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
+import { ReviewListRelationFilter } from "../../review/base/ReviewListRelationFilter";
+import { InventoryListRelationFilter } from "../../inventory/base/InventoryListRelationFilter";
 
 @InputType()
 class ProductWhereInput {
@@ -87,6 +89,30 @@ class ProductWhereInput {
     nullable: true,
   })
   category?: CategoryWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => ReviewListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => ReviewListRelationFilter)
+  @IsOptional()
+  @Field(() => ReviewListRelationFilter, {
+    nullable: true,
+  })
+  reviews?: ReviewListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => InventoryListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => InventoryListRelationFilter)
+  @IsOptional()
+  @Field(() => InventoryListRelationFilter, {
+    nullable: true,
+  })
+  inventories?: InventoryListRelationFilter;
 }
 
 export { ProductWhereInput as ProductWhereInput };

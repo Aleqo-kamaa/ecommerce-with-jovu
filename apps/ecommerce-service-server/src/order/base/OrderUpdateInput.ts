@@ -22,6 +22,7 @@ import {
   MaxLength,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { PaymentUpdateManyWithoutOrdersInput } from "./PaymentUpdateManyWithoutOrdersInput";
 
 @InputType()
 class OrderUpdateInput {
@@ -61,6 +62,42 @@ class OrderUpdateInput {
     nullable: true,
   })
   status?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => PaymentUpdateManyWithoutOrdersInput,
+  })
+  @ValidateNested()
+  @Type(() => PaymentUpdateManyWithoutOrdersInput)
+  @IsOptional()
+  @Field(() => PaymentUpdateManyWithoutOrdersInput, {
+    nullable: true,
+  })
+  payments?: PaymentUpdateManyWithoutOrdersInput;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  trackingNumber?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  shippingAddress?: string | null;
 }
 
 export { OrderUpdateInput as OrderUpdateInput };

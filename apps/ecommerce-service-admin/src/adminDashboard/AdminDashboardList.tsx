@@ -18,6 +18,8 @@ export const AdminDashboardList = (props: ListProps): React.ReactElement => {
         <TextField label="activity" source="activity" />
         <TextField label="adminName" source="adminName" />
         <TextField label="email" source="email" />
+        <TextField label="salesReports" source="salesReports" />
+        <TextField label="productAnalytics" source="productAnalytics" />
       </Datagrid>
     </List>
   );

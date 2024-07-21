@@ -23,6 +23,8 @@ import {
 } from "class-validator";
 import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 import { Type } from "class-transformer";
+import { ReviewUpdateManyWithoutProductsInput } from "./ReviewUpdateManyWithoutProductsInput";
+import { InventoryUpdateManyWithoutProductsInput } from "./InventoryUpdateManyWithoutProductsInput";
 
 @InputType()
 class ProductUpdateInput {
@@ -87,6 +89,30 @@ class ProductUpdateInput {
     nullable: true,
   })
   category?: CategoryWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => ReviewUpdateManyWithoutProductsInput,
+  })
+  @ValidateNested()
+  @Type(() => ReviewUpdateManyWithoutProductsInput)
+  @IsOptional()
+  @Field(() => ReviewUpdateManyWithoutProductsInput, {
+    nullable: true,
+  })
+  reviews?: ReviewUpdateManyWithoutProductsInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => InventoryUpdateManyWithoutProductsInput,
+  })
+  @ValidateNested()
+  @Type(() => InventoryUpdateManyWithoutProductsInput)
+  @IsOptional()
+  @Field(() => InventoryUpdateManyWithoutProductsInput, {
+    nullable: true,
+  })
+  inventories?: InventoryUpdateManyWithoutProductsInput;
 }
 
 export { ProductUpdateInput as ProductUpdateInput };

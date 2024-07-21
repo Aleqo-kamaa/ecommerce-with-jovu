@@ -1,4 +1,6 @@
 import { Category } from "../category/Category";
+import { Review } from "../review/Review";
+import { Inventory } from "../inventory/Inventory";
 
 export type Product = {
   id: string;
@@ -9,4 +11,6 @@ export type Product = {
   stock: number | null;
   name: string | null;
   category?: Category | null;
+  reviews?: Array<Review>;
+  inventories?: Array<Inventory>;
 };

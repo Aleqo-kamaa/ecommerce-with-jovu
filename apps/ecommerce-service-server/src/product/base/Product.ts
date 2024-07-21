@@ -26,6 +26,8 @@ import {
 
 import { Type } from "class-transformer";
 import { Category } from "../../category/base/Category";
+import { Review } from "../../review/base/Review";
+import { Inventory } from "../../inventory/base/Inventory";
 
 @ObjectType()
 class Product {
@@ -111,6 +113,24 @@ class Product {
   @Type(() => Category)
   @IsOptional()
   category?: Category | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Review],
+  })
+  @ValidateNested()
+  @Type(() => Review)
+  @IsOptional()
+  reviews?: Array<Review>;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Inventory],
+  })
+  @ValidateNested()
+  @Type(() => Inventory)
+  @IsOptional()
+  inventories?: Array<Inventory>;
 }
 
 export { Product as Product };

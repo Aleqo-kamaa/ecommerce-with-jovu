@@ -7,4 +7,6 @@ export type OrderOrderByInput = {
   userId?: SortOrder;
   totalAmount?: SortOrder;
   status?: SortOrder;
+  trackingNumber?: SortOrder;
+  shippingAddress?: SortOrder;
 };

@@ -24,6 +24,8 @@ const CREATE_INPUT = {
   activity: "exampleActivity",
   adminName: "exampleAdminName",
   email: "exampleEmail",
+  salesReports: "exampleSalesReports",
+  productAnalytics: "exampleProductAnalytics",
 };
 const CREATE_RESULT = {
   id: "exampleId",
@@ -32,6 +34,8 @@ const CREATE_RESULT = {
   activity: "exampleActivity",
   adminName: "exampleAdminName",
   email: "exampleEmail",
+  salesReports: "exampleSalesReports",
+  productAnalytics: "exampleProductAnalytics",
 };
 const FIND_MANY_RESULT = [
   {
@@ -41,6 +45,8 @@ const FIND_MANY_RESULT = [
     activity: "exampleActivity",
     adminName: "exampleAdminName",
     email: "exampleEmail",
+    salesReports: "exampleSalesReports",
+    productAnalytics: "exampleProductAnalytics",
   },
 ];
 const FIND_ONE_RESULT = {
@@ -50,6 +56,8 @@ const FIND_ONE_RESULT = {
   activity: "exampleActivity",
   adminName: "exampleAdminName",
   email: "exampleEmail",
+  salesReports: "exampleSalesReports",
+  productAnalytics: "exampleProductAnalytics",
 };
 
 const service = {

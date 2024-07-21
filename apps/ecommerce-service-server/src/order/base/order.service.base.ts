@@ -13,6 +13,7 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   Order as PrismaOrder,
+  Payment as PrismaPayment,
   User as PrismaUser,
 } from "@prisma/client";
 
@@ -37,6 +38,17 @@ export class OrderServiceBase {
   }
   async deleteOrder(args: Prisma.OrderDeleteArgs): Promise<PrismaOrder> {
     return this.prisma.order.delete(args);
+  }
+
+  async findPayments(
+    parentId: string,
+    args: Prisma.PaymentFindManyArgs
+  ): Promise<PrismaPayment[]> {
+    return this.prisma.order
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .payments(args);
   }
 
   async getUser(parentId: string): Promise<PrismaUser | null> {

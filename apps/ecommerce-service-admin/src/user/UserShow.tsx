@@ -12,6 +12,7 @@ import {
 } from "react-admin";
 
 import { USER_TITLE_FIELD } from "./UserTitle";
+import { PRODUCT_TITLE_FIELD } from "../product/ProductTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -25,6 +26,8 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Username" source="username" />
         <TextField label="Email" source="email" />
         <TextField label="Roles" source="roles" />
+        <TextField label="phoneNumber" source="phoneNumber" />
+        <TextField label="address" source="address" />
         <ReferenceManyField reference="Order" target="userId" label="Orders">
           <Datagrid rowClick="show">
             <TextField label="ID" source="id" />
@@ -35,6 +38,27 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
             </ReferenceField>
             <TextField label="totalAmount" source="totalAmount" />
             <TextField label="status" source="status" />
+            <TextField label="trackingNumber" source="trackingNumber" />
+            <TextField label="shippingAddress" source="shippingAddress" />
+          </Datagrid>
+        </ReferenceManyField>
+        <ReferenceManyField reference="Review" target="userId" label="Reviews">
+          <Datagrid rowClick="show">
+            <TextField label="ID" source="id" />
+            <DateField source="createdAt" label="Created At" />
+            <DateField source="updatedAt" label="Updated At" />
+            <TextField label="rating" source="rating" />
+            <TextField label="comment" source="comment" />
+            <ReferenceField
+              label="product"
+              source="product.id"
+              reference="Product"
+            >
+              <TextField source={PRODUCT_TITLE_FIELD} />
+            </ReferenceField>
+            <ReferenceField label="user" source="user.id" reference="User">
+              <TextField source={USER_TITLE_FIELD} />
+            </ReferenceField>
           </Datagrid>
         </ReferenceManyField>
       </SimpleShowLayout>

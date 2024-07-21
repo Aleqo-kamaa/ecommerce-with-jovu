@@ -25,6 +25,9 @@ import { UserUpdateInput } from "./UserUpdateInput";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
+import { ReviewFindManyArgs } from "../../review/base/ReviewFindManyArgs";
+import { Review } from "../../review/base/Review";
+import { ReviewWhereUniqueInput } from "../../review/base/ReviewWhereUniqueInput";
 
 export class UserControllerBase {
   constructor(protected readonly service: UserService) {}
@@ -42,6 +45,8 @@ export class UserControllerBase {
         username: true,
         email: true,
         roles: true,
+        phoneNumber: true,
+        address: true,
       },
     });
   }
@@ -62,6 +67,8 @@ export class UserControllerBase {
         username: true,
         email: true,
         roles: true,
+        phoneNumber: true,
+        address: true,
       },
     });
   }
@@ -83,6 +90,8 @@ export class UserControllerBase {
         username: true,
         email: true,
         roles: true,
+        phoneNumber: true,
+        address: true,
       },
     });
     if (result === null) {
@@ -113,6 +122,8 @@ export class UserControllerBase {
           username: true,
           email: true,
           roles: true,
+          phoneNumber: true,
+          address: true,
         },
       });
     } catch (error) {
@@ -143,6 +154,8 @@ export class UserControllerBase {
           username: true,
           email: true,
           roles: true,
+          phoneNumber: true,
+          address: true,
         },
       });
     } catch (error) {
@@ -177,6 +190,8 @@ export class UserControllerBase {
 
         totalAmount: true,
         status: true,
+        trackingNumber: true,
+        shippingAddress: true,
       },
     });
     if (results === null) {
@@ -228,6 +243,94 @@ export class UserControllerBase {
   ): Promise<void> {
     const data = {
       orders: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Get("/:id/reviews")
+  @ApiNestedQuery(ReviewFindManyArgs)
+  async findReviews(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Review[]> {
+    const query = plainToClass(ReviewFindManyArgs, request.query);
+    const results = await this.service.findReviews(params.id, {
+      ...query,
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        rating: true,
+        comment: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/reviews")
+  async connectReviews(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ReviewWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      reviews: {
+        connect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/reviews")
+  async updateReviews(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ReviewWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      reviews: {
+        set: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/reviews")
+  async disconnectReviews(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ReviewWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      reviews: {
         disconnect: body,
       },
     };

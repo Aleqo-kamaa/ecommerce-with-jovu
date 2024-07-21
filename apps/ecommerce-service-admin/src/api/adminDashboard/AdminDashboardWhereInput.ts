@@ -6,4 +6,6 @@ export type AdminDashboardWhereInput = {
   activity?: StringNullableFilter;
   adminName?: StringNullableFilter;
   email?: StringNullableFilter;
+  salesReports?: StringNullableFilter;
+  productAnalytics?: StringNullableFilter;
 };

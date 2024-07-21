@@ -8,9 +8,13 @@ import {
   TextInput,
   ReferenceInput,
   SelectInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
 
 import { CategoryTitle } from "../category/CategoryTitle";
+import { ReviewTitle } from "../review/ReviewTitle";
+import { InventoryTitle } from "../inventory/InventoryTitle";
 
 export const ProductCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -27,6 +31,22 @@ export const ProductCreate = (props: CreateProps): React.ReactElement => {
         >
           <SelectInput optionText={CategoryTitle} />
         </ReferenceInput>
+        <ReferenceArrayInput
+          source="reviews"
+          reference="Review"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={ReviewTitle} />
+        </ReferenceArrayInput>
+        <ReferenceArrayInput
+          source="inventories"
+          reference="Inventory"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={InventoryTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Create>
   );
